@@ -1,0 +1,564 @@
+/* your-component.component.css */
+::ng-deep .fc-customButton1-button {
+  background-color: #00a0a3 !important;
+   color: #ffffff !important;
+  border: none !important; 
+  padding: 8px 24px !important;
+  
+}
+
+::ng-deep .fc-customButton2-button {
+  background-color: white !important;
+  color: #00a0a3 !important;
+  border-color: #00a0a3 !important;
+  padding: 8px 24px !important;
+
+}
+
+::ng-deep .fc-customButton3-button {
+background-color: #ebfbff !important;
+color: #00a0a3 !important;
+border: none !important;
+padding: 8px 12px !important;
+}
+
+
+::ng-deep .fc-dropdownButton-button {
+  background-color: #00a0a3 !important;
+  color: black !important;
+  border-color: #00a0a3 !important;
+  height: 40px;
+}
+
+
+::ng-deep.fc-today-button {
+  background-color: white !important;
+  border: none !important;
+  color:  black !important;
+  font-size: 30px !important;
+  margin: 0 !important;
+  border: none !important; /* Remove border */
+  box-shadow: none !important; /* Ensure no shadow effect */
+}
+
+::ng-deep.fc-prev-button {
+  background-color: white !important;
+  color:  black !important;
+  font-size: 30px !important;
+  margin: 0 !important;
+  border: none !important; /* Remove border */
+  box-shadow: none !important; /* Ensure no shadow effect */
+}
+
+::ng-deep.fc-next-button {
+  background-color: white !important;
+  color:  black !important;
+  font-size: 30px !important;
+  margin: 0 !important;
+  border: none !important; /* Remove border */
+  box-shadow: none !important; /* Ensure no shadow effect */
+    
+}
+
+::ng-deep .fc-prev-button,
+::ng-deep .fc-next-button,
+::ng-deep .fc-today-button {
+  margin-right: -24px !important; /* Add a small space between the buttons */
+}
+
+
+::ng-deep .fc-customDropdown-button {
+ 
+  
+  height: 10%;
+  top: 15px; 
+  border: ebfbff;
+  background-color: #ebfbff !important;
+  color: black !important;
+}
+
+::ng-deep.fa-caret-down {
+  color: red; /* Specify the color here */
+}
+
+
+.dropdown-menu{
+ 
+  display: none;
+  position: absolute;
+  background-color: #ebfbff;
+  border: 1 px solid#00000000;
+  color: #083160;
+  padding: 5px 0;
+  margin-top: 3%;
+  margin-right: 23%;
+  margin-left: 0%;
+  right: 0; /* Align to the right */
+  width: 10px; /* Adjust the width as needed */
+}
+
+.dropdown-toggle {
+  width: 180px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  /* Add any other styling as needed */
+}
+
+.dropdown-item1 {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.dropdown-item1:hover {
+  background-color: #083160;
+}
+.padding{
+  padding-left: 20%;
+}
+.padding-1{
+  padding-left: 5%;
+}
+
+/* your-component.component.css */
+.color-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.selected-color {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #ccc; /* You can style the border as you like */
+  cursor: pointer;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 40px; /* Adjust this value to position the dropdown relative to the selected color */
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1;
+  display: none;
+}
+
+.color-option {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 5px;
+  cursor: pointer;
+}
+
+/* styles.css or component-specific CSS */
+.clr {
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Adjust the size as needed */
+  border-radius: 50%;
+  border: none; /* Optional: remove border */
+  outline: none; /* Optional: remove outline */
+  cursor: pointer;
+  padding: 0; /* Optional: remove padding */
+}
+.time-picker-container {
+  display: inline-block;
+  margin-left: 5%;
+}
+
+.time-picker {
+  width: 150px; /* Set desired width */
+  height: 30px; /* Set desired height */
+  border-radius: 4px; /* Slightly rounded corners */
+  border: 1px solid #ccc; /* Optional: add a border */
+  outline: none; /* Remove default outline */
+  padding: 5px; /* Add padding */
+  box-sizing: border-box; /* Ensure padding is included in width/height */
+  font-size: 14px; /* Adjust font size */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+.clr {
+  width: 100px; /* Set desired width */
+  height: 50px; /* Set desired height */
+  margin-top: 10%;
+  margin-right: 30%;
+  border-radius: 4px; /* Make the input rectangular with slightly rounded corners */
+  border: 1px solid #ccc; /* Optional: add a border */
+  outline: none; /* Remove default outline */
+  cursor: pointer; /* Change cursor to pointer */
+  
+  box-sizing: border-box; /* Ensure padding is included in width/height */
+}
+.modal-title span {
+  margin-left: 8px; /* Adjust the value as needed */
+}
+
+::ng-deep .fc .fc-day-today .fc-daygrid-day-number {
+  background-color: #1a73e8  !important;/* Blue background color */
+ /* White text color for contrast */
+  border-radius: 50%; /* Make the background circular */
+  padding: 1px 5px !important; /* Adjust padding to center the circle around the number */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+  display: inline-block; /* Ensure the element maintains its circular shape */
+  width: 30px; /* Adjust width to make the circle large enough */
+  height: 30px; /* Adjust height to make the circle large enough */
+  line-height: 30px; /* Center the text vertically */
+  text-align: center; /* Center the text horizontally */
+}
+  
+/* color css */
+.nonagon {
+  width: 40px;
+  height: 40px;
+  clip-path: polygon(
+      50% 0%,
+      90% 10%,
+      100% 50%,
+      90% 90%,
+      50% 100%,
+      10% 90%,
+      0% 50%,
+      10% 10%,
+      50% 0%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.title-container {
+display: flex;
+align-items: center;
+gap: 10px; /* Adjust as needed */
+}
+
+.title-container h3 {
+margin: 0; /* Reset default margin */
+}
+/* css for customButton 3  */
+::ng-deep .fc-header-toolbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+
+
+/* this is the css for date and custom button 3 to aligne theme  */
+
+
+
+::ng-deep .fc-header-toolbar .fc-left {
+display: flex;
+align-items: center;
+}
+
+::ng-deep .fc-header-toolbar .fc-left .fc-toolbar-title,
+::ng-deep .fc-header-toolbar .fc-left .fc-button {
+display: inline-flex;
+align-items: center;
+margin: 0;
+}
+
+::ng-deep .fc-header-toolbar .fc-left .fc-toolbar-title {
+margin-right: 5px; /* Adjust this value as needed for spacing */
+}
+/* / line css /
+/ styles.css or styles.scss / */
+::ng-deep.fc-daygrid-event, 
+::ng-deep.fc-daygrid-event-dot {
+line-height: 1.2em;
+padding: 2px 4px;
+}
+
+::ng-deep.fc-timegrid-event {
+line-height: 1.2em;
+padding: 2px 4px;
+}
+/* Custom Button 3 Alignment */
+::ng-deep .fc-header-toolbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+::ng-deep .fc-header-toolbar .fc-left {
+display: flex;
+align-items: center;
+}
+
+::ng-deep .fc-header-toolbar .fc-left .fc-toolbar-title {
+margin-right: 10px; /* Adjust this value as needed for spacing */
+}
+
+::ng-deep .fc-header-toolbar .fc-left .fc-toolbar-title, 
+::ng-deep .fc-header-toolbar .fc-left .fc-button {
+display: inline-flex;
+align-items: center;
+margin: 0;
+}
+
+/* Style for customButton3 to align it next to the title */
+::ng-deep .fc-customButton3-button {
+margin-left: 10px; /* Adjust spacing between title and button */
+}
+
+/* Date Positioning in Top-Middle */
+::ng-deep .fc-daygrid-day-top {
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+height: 40px; /* Adjust height if needed */
+}
+
+::ng-deep .fc-daygrid-day-number {
+font-size: 12px;
+line-height: 1;
+margin-top: 5px; /* Adjust to position the date in the middle */
+}
+
+::ng-deep .fc .fc-day-today .fc-daygrid-day-number {
+background-color: blue; /* Blue background color */
+color: white; /* White text color for contrast */
+border-radius: 50%; /* Make the background circular */
+padding: 5px; /* Adjust padding to center the circle around the number */
+box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+display: inline-block; /* Ensure the element maintains its circular shape */
+width: 30px; /* Adjust width to make the circle large enough */
+height: 30px; /* Adjust height to make the circle large enough */
+line-height: 30px; /* Center the text vertically */
+text-align: center; /* Center the text horizontally */
+}
+
+/* Additional styles for calendar events */
+::ng-deep .fc-daygrid-event, 
+::ng-deep .fc-daygrid-event-dot {
+line-height: 1.2em;
+padding: 2px 4px;
+}
+
+::ng-deep .fc-timegrid-event {
+line-height: 1.2em;
+padding: 2px 4px;
+}
+
+
+::ng-deep .fc-toolbar-title {
+display: inline-block;
+margin-right: 10px; /* Adjust as needed for spacing */
+}
+
+::ng-deep .fc-customButton3-button {
+margin-left: 10px; /* Adjust as needed for spacing */
+}
+
+::ng-deep .fc-header-toolbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+::ng-deep .fc-header-toolbar .fc-left {
+display: flex;
+align-items: center;
+}
+
+::ng-deep .fc-header-toolbar .fc-left .fc-toolbar-title,
+::ng-deep .fc-header-toolbar .fc-left .fc-button {
+display: inline-flex;
+align-items: center;
+margin: 0;
+}
+/* end  */
+
+::ng-deep .fc .fc-col-header-cell-cushion,
+::ng-deep button.fc-today-button.fc-button.fc-button-primary 
+{
+
+text-transform: uppercase;
+}
+
+
+
+::ng-deep .fc-customButton4-button {
+background-color: var(--Primarylight-color) !important;
+color: var(--Action-color)!important;
+border: 1px solid transparent !important;
+padding: 4px 6px !important;
+cursor: pointer !important;
+font-weight: 500 !important;
+font-size: clamp(12px, 1vw, 14px) !important;
+}
+
+
+/* calendar.component.css */
+
+/* Style the container for the dropdown */
+.calendar-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style the dropdown button */
+.btn-secondary.dropdown-toggle {
+  background-color: #007bff; /* Change this color to match your theme */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Style the dropdown menu */
+.dropdown-menu {
+  display: none; /* Hide the dropdown menu by default */
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Show the dropdown menu when it has the show class */
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Style each item in the dropdown menu */
+.dropdown-item1 {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change the background color of dropdown items on hover */
+.dropdown-item1:hover {
+  background-color: #ddd;
+}
+
+/* Adjust the button and dropdown menu for smaller screens */
+@media (max-width: 768px) {
+  .btn-secondary.dropdown-toggle {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .dropdown-menu {
+    min-width: 100%;
+  }
+
+  .dropdown-item1 {
+    padding: 10px 14px;
+  }
+}
+
+
+
+::ng-deep .fc-daygrid-block-event .fc-event-time, .fc-daygrid-block-event .fc-event-title {
+  margin-left: 10px;
+}
+
+
+.color-picker-wrapper {
+  position: relative;
+  width: 40px; /* Adjust width as needed */
+  height: 40px; /* Adjust height as needed */
+  overflow: hidden;
+}
+
+.color-picker-wrapper input[type="color"] {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+
+::ng-deep .fc .fc-col-header-cell-cushion {
+  display: inline-block;
+  padding: 2px 4px;
+  color: black;
+}
+::ng-deep .fc-today-button {
+  font-size: 16px !important;
+}
+::ng-deep .fc-prev-button {
+  font-size: 20px !important;
+}
+::ng-deep .fc-next-button {
+  font-size: 20px !important;
+}
+::ng-deep .fc .fc-button{
+  padding: 0;
+}
+
+::ng-deep .fc .fc-button-group {
+  gap: 30px;
+}
+::ng-deep .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+  margin-left: 1.75em;
+}
+::ng-deep .dropdown label{
+margin: 0 !important;
+padding: 6px 14px;
+}
+
+::ng-deep .fc-scrollgrid-section > td {
+  padding: 0 !important;
+}
+::ng-deep .fc .fc-scrollgrid-section > * {
+  padding: 0 !important;
+}
+
+/* Highlight the current month's dates */
+::ng-deep .fc-daygrid-day.fc-day-today {
+  background-color: #d1e7dd; /* Light green background */
+}
+
+/* Fade background for dates not in the current month */
+::ng-deep .fc-daygrid-day.fc-day-other {
+  background-color: #f8f9fa; /* Light grey background */
+  color: #6c757d; /* Optional: Darker text color for contrast */
+}
+
+::ng-deep .fc .fc-daygrid-day-number {
+  
+  color: black;
+}
+
+::ng-deep .fc-day.fc-day-sat.fc-day-past.fc-daygrid-day {
+  padding-top: 5px; /* Adjust the value as needed */
+}
+
+::ng-deep .fc-daygrid-day-top{
+
+    margin-top: -7px;
+}
+input[type="date"]{
+  padding: 0px;
+}
+::ng-deep .fc .fc-daygrid-day.fc-day-today {
+  background-color: white !important;
+}
+::ng-deep th {
+  color: var(--TextDark-color);
+  font-size: clamp(10px, 1vw, 14px);
+  font-weight: 400 !important;
+  padding: 12px 24px !important;
+}

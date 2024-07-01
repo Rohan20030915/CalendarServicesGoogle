@@ -1,0 +1,612 @@
+<!-- DASHBOARD START -->
+
+
+<!-- Main Content -->
+<div class="main_content contentSection">
+    <!-- Calendar details -->
+    <!-- <div [class]="calenderClass" data-number="1">
+        <div class=" mb-4 calendar_task">
+
+            <div class=" gap-3 p-0 calendar_details">
+
+
+            </div>
+        </div>
+        <div class="calendar-container" style="position: relative;">
+            <div id="viewDropdownMenu" class="dropdown-menu"
+                style="display: none; position: absolute; z-index: 1000; max-height: 200px; overflow-y: auto;">
+                <button class="dropdown-item" (click)="changeView('dayGridMonth', 'Month')">Month</button>
+                <button class="dropdown-item" (click)="changeView('timeGridWeek', 'Week')">Week</button>
+                <button class="dropdown-item" (click)="changeView('timeGridDay', 'Day')">Day</button>
+            </div>
+        </div>
+        
+        <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+
+    </div> -->
+    <div [class]="calenderClass" data-number="1">
+
+        <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+    </div>
+    <!-- Task details -->
+    <div class="white_card_background p-4 h-100" id="taskModal">
+        <div [class]="taskDetailClass" data-number="1">
+            <div class=" calendar_task mb-4">
+                <!--  top  content -->
+                <div class="d-flex align-items-center gap-3">
+                    <h2 class="card_heading Sub-Heading Medium mb-0"></h2>
+
+                    <img src="assets/images/svg-img/calender.svg">
+                    <!-- <div>
+                           <input type="date" id="datePickerList"  style="position: absolute; opacity: 0; height:35px; width:35px; cursor: pointer;">
+                          <img src="assets/images/svg-img/calender.svg" style="height:35; width:35px; cursor: pointer;">
+                           </div>  -->
+                    <button class="action_light_btn small-text Medium" data-bs-toggle="modal" (click)="openModal()">
+                        + Add
+                    </button>
+                    <app-add-task [isVisible]="isTaskPopupVisible"
+                        (close)="showAndRemoveTaskPopupForAdd(false)"></app-add-task>
+
+                </div>
+                <div class="selectSection d-flex gap-3">
+                    <button type="button" (click)="changeClass()" class="primary_outline_btn medium-text Medium px-4 ">
+                        Calendar
+                    </button>
+                    <button type="button" data-number="2" class="primary_outline_btn medium-text Medium px-4  active ">
+                        Task & Event
+                    </button>
+                </div>
+            </div>
+            <div class="single_tab mb-5">
+                <ul class="nav d-flex gap-4" id="pills-tab" role="tablist">
+                    <!-- Add Task -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active p-1 Sub-Heading" id="pills-AddTask-tab" data-bs-toggle="pill"
+                            type="button" (click)="selectTab('tasks')" role="tab" aria-controls="pills-AddTask"
+                            aria-selected="true"> Tasks </button>
+                    </li>
+                    <!-- Add Event  -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link p-1 Sub-Heading" id="pills-AddEvent-tab" data-bs-toggle="pill"
+                            type="button" role="tab" aria-controls="pills-AddEvent" (click)="selectTab('events')"
+                            aria-selected="false" tabindex="-1">
+                            Events
+                        </button>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- task -->
+            <div *ngIf="selectedTab === 'tasks'">
+                <div class="task p-4 d-flex flex-column gap-4" *ngFor="let t of tasks">
+                    <!-- task details  -->
+                    <div class="d-flex justify-content-between">
+                        <div class="task_card">
+                            <div class="d-flex gap-3">
+                                <h2 class="mb-0 small-text Medium">Title - {{t.title}}</h2>
+                                <div class="action_light_btn smaller-text Medium py-0 px-1">
+                                    Completed
+                                </div>
+                            </div>
+                            <h3 class="mb-0 medium-text Medium" [innerHTML]="t.description">
+                            </h3>
+                            <div class="modal_heading d-flex">
+                                <h4 class="Caption Medium secondary_card_background p-1 mb-0"> <strong> {{t.startDate}}
+                                    </strong><span>({{ t.startDate | date: 'EEEE' }})
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="dropdown-2">
+                            <img src="assets/images/svg-img/dropdown_icon.svg" height="22" width="22"
+                                class=" dropdown-toggle-2" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <ul class="dropdown-menu dropdown_details">
+                                <li><a class="dropdown-item" (click)="deleteTask(t.id)">Remove </a></li>
+                                <li><a class="dropdown-item" href="#">Task Completed</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Events -->
+            <div *ngIf="selectedTab === 'events'">
+                <div class="task p-4 d-flex flex-column gap-4" *ngFor="let event of events">
+                    <!-- event details  -->
+                    <div class="d-flex justify-content-between">
+                        <div class="task_card">
+                            <div class="d-flex gap-3">
+                                <h2 class="mb-0 small-text Medium">Title - {{event.title}}</h2>
+                                <div class="action_light_btn smaller-text Medium py-0 px-1">
+                                    Completed
+                                </div>
+                            </div>
+                            <h3 class="mb-0 medium-text Medium" [innerHTML]="event.description">
+                            </h3>
+                            <div class="modal_heading d-flex">
+                                <h4 class="Caption Medium secondary_card_background p-1 mb-0"> <strong>
+                                        {{event.startDate}}
+                                    </strong><span>({{ event.startDate | date: 'EEEE' }})
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="dropdown-2">
+                            <img src="assets/images/svg-img/dropdown_icon.svg" height="22" width="22"
+                                class=" dropdown-toggle-2" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <ul class="dropdown-menu dropdown_details">
+                                <li><a class="dropdown-item" (click)="deleteEvent(t.id)">Remove </a></li>
+                                <li><a class="dropdown-item" href="#">Event Completed</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Task calender model -->
+<div class="modal fade" id="task" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header secondary_card_background modal_heading px-4 py-3 mb-3">
+                <h1 class="modal-title small-text Medium" id="exampleModalToggleLabel">
+                    {{t.startDate}}<span>({{t.startDate | date:'EEEE'}})
+                    </span></h1>
+                <div class="d-flex gap-2 modal_actions_btn">
+
+                    <img src="assets/images/svg-img/edit-modal.svg" data-bs-toggle="modal" href="#taskedit"
+                        (click)="showTaskOrEventPopup(t.id,'task')">
+                    <app-update-task [isVisible]="isTaskPopupVisible" [taskId]="selectedTaskId"
+                        (close)="hideTaskOrEventPopup('task')"></app-update-task>
+                    <img src="../assets/images/png-img/email.png" height="20px" width="20px">
+
+
+                    <img src="assets/images/svg-img/delete-modal.svg" (click)="deleteTask(t.id)">
+
+                    <!-- color picker ="clr" [(colorPicker)]="task.color" [style.background]="task.color"
+                         <input class
+                        
+                        (colorPickerChange)="onColorChangeTask($event, t.taskId)" /> -->
+
+                    <button type="button" class="btn-close" (click)="closeModel('task')" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <!-- task.component.html -->
+
+
+                </div>
+            </div>
+            <div class="modal-body px-4 py-0  modal_details">
+                <div class="title-container">
+                    <h3 class="Medium small-text mb-3 nonagon" style="width: 40px; height: 40px;"
+                        [style.background]="t.color" [style.color]="t.color"></h3>
+                    <h3 class="Medium small-text mb-3">Title - {{t.title}}</h3>
+                </div>
+
+                <u class="Medium small-text mb-0">Description</u>
+                <h4 class="Regular small-text mb-0 mt-2" [innerHTML]="t.description"></h4>
+            </div>
+            <div class="modal-footer border-0 p-4">
+                <div class="form-check  d-inline-block position-relative account_option ms-auto">
+                    <label for="vehicle1" class="checkbox">
+                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="d-none">
+                        <span class="checkmark"></span>
+                        <div class="check_box">
+                            Some Function
+                        </div>
+
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Event calendar modal -->
+<div class="modal fade" id="event" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header secondary_card_background modal_heading px-4 py-3 mb-3">
+                <h1 class="modal-title small-text Medium" id="exampleModalToggleLabel">
+                    {{e.startDate}}<span>{{e.endDate}}
+                    </span></h1>
+                <div class="d-flex gap-2 calendar modal_actions_btn">
+                    <img src="assets/images/svg-img/edit-modal.svg" data-bs-toggle="modal" href="#taskedit"
+                        (click)="showTaskOrEventPopup(e.eventId,'event')">
+                    <app-update-event [isVisible]="isEventPopupVisible" [eventId]="selectedEventId"
+                        (close)="hideTaskOrEventPopup('event')"></app-update-event>
+                    <img src="assets/images/svg-img/delete-modal.svg" (click)="deleteEvent(e.eventId)">
+                    <!-- <input class="clr" [(colorPicker)]="event.color" [style.background]="event.color" (colorPickerChange)="onColorChangeEvent($event, e.eventId)" /> -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeModel('event')"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body px-4 py-0 mb-4 modal_details">
+                <div class=" mb-3 d-flex align-items-center gap-1">
+                    <h3 class="Medium small-text mb-3 nonagon" style="width: 40px;height: 40px;"
+                        [style.background]="e.color" [style.color]="e.color"></h3>
+                    <h3 class="Medium medium-text mb-0">{{e.title}}</h3>
+                    <div class="action_light_btn smaller-text Medium py-1 px-3">
+                        {{e.location}}
+                    </div>
+                </div>
+                <u class="Medium small-text mb-0">Description</u>
+                <h4 class="Regular small-text mb-0 mt-2" [innerHTML]="e.description"></h4>
+                <div *ngIf="(e.googleMeetingLink!=null && e.googleMeetingLink != '' && e.createGoogleMeeting == true)">
+                    <u class="Medium small-text mb-0">Meeting Link</u>
+                    <h4 class="Regular small-text mb-0 mt-2">
+                        <a href="{{e.googleMeetingLink}}" target="_blank">{{e.googleMeetingLink}}</a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Add calendar modal -->
+<div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog large_modal modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4  modal_details">
+                <div class="single_tab mb-5">
+                    <ul class="nav d-flex gap-4" id="pills-tab" role="tablist">
+                        <!-- Add Task -->
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active p-1 Sub-Heading" id="pills-AddTask-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-AddTask" type="button" role="tab" aria-controls="pills-AddTask"
+                                aria-selected="true">New Task </button>
+                        </li>
+                        <!-- Add Event  -->
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link p-1 Sub-Heading" id="pills-AddEvent-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-AddEvent" type="button" role="tab" aria-controls="pills-AddEvent"
+                                aria-selected="false" tabindex="-1">Add Event
+                            </button>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!-- tabs start -->
+                <div class="tab-content" id="pills-tabContent">
+
+                    <!-- Add Task tabs -->
+                    <div class="tab-pane fade show active" id="pills-AddTask" role="tabpanel"
+                        aria-labelledby="pills-AddTask-tab" tabindex="0">
+                        <form (ngSubmit)="addTask()" [formGroup]="taskForm">
+                            <div class="d-flex flex-column gap-3 add_task mb-5">
+                                <!-- title -->
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="mb-0">Title</h3>
+                                    <input type="text" name="title" formControlName="title" [(ngModel)]="task.title"
+                                        placeholder="Field Name " class="search_input_field small-text p-2">
+                                </div>
+                                <div class="padding"
+                                    *ngIf="taskForm.get('title')?.errors?.['required'] && taskForm.get('title')?.touched">
+                                    <small class="text-danger">Title is required.</small>
+                                </div>
+                                <span class="padding-1"
+                                *ngIf="taskForm.get('title')?.errors?.['minlength'] && taskForm.get('title')?.touched">
+                              <small class="text-danger">Title too short.</small>
+                              </span>
+                                <!-- Description -->
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="mb-0">Description</h3>
+                                    <ckeditor [editor]="Editor" [(ngModel)]="task.description"
+                                        formControlName="description" name="description"></ckeditor>
+
+                                </div>
+                                <div class="padding"
+                                    *ngIf="taskForm.get('description')?.errors?.['required'] && taskForm.get('description')?.touched">
+                                    <small class="text-danger">Description is required.</small>
+                                </div>
+                                <span class="padding-1"
+                                *ngIf="taskForm.get('description')?.errors?.['minlength'] && taskForm.get('description')?.touched">
+                              <small class="text-danger">Description is too short.</small>
+                              </span>
+                                <!-- checkbox -->
+                                <div class="d-flex modal_heading">
+                                    <h3 class="mb-0">All day</h3>
+                                    <div class="d-flex gap-2 position-relative">
+                                        <label class="modal_checkbox">
+                                            <input type="checkbox" (input)="changeValidation('TASK')"
+                                                [(ngModel)]="task.isAllDay" formControlName="isAllDay" name="isAllDay">
+                                            <span class="checkmarks"></span>
+                                        </label>
+                                        <h1 class="small-text Medium mb-0"
+                                            *ngIf="task.startDate !=null||task.startDate!=undefined"> {{task.startDate}}
+                                            <span
+                                                *ngIf="task.startDate !=null||task.startDate!=undefined">({{task.startDate
+                                                | date: 'EEEE'}})
+                                            </span></h1>
+                                    </div>
+                                </div>
+                                <!-- start date time -->
+                                <div class="d-flex gap-4">
+                                    <div class="d-flex justify-content-between w-50 align-items-center">
+                                        <h3 class="mb-0 w-50">Start Date</h3>
+                                        <div class="input-container w-75">
+                                            <input type="date" placeholder="Field Name" formControlName="startDate"
+                                                [(ngModel)]="task.startDate" name="startDate" [min]="startOfDay"
+                                                (input)="task.setTimesForWholeDay(false)"
+                                                class="search_input_field small-text p-2">
+                                            <i class="fa fa-calendar date-icon"></i>
+                                            <div class="padding-1"
+                                                *ngIf="taskForm.get('startDate')?.errors?.['required'] && taskForm.get('startDate')?.touched">
+                                                <small class="text-danger">startDate is required.</small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div *ngIf="!task.isAllDay" class="d-flex justify-content-between w-50 align-items-center">
+                                        <h3 class="mb-0 w-50">End Date</h3>
+                                        <div class="input-container w-75">
+                                            <input type="date" placeholder="Field Name" formControlName="endDate"
+                                                [min]="task.startDate" [(ngModel)]="task.endDate" name="endDate"
+                                                class="search_input_field small-text p-2">
+                                            <i class="fa fa-calendar date-icon"></i>
+                                            <div class="padding-1"
+                                                *ngIf="taskForm.get('endDate')?.errors?.['required'] && taskForm.get('endDate')?.touched">
+                                                <small class="text-danger">endDate is required.</small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div *ngIf="!task.isAllDay" class="d-flex gap-4">
+                                    <div class="d-flex justify-content-between w-50 align-items-center">
+                                        <h3 class="mb-0 w-50">Start Time</h3>
+                                        <div class="input-container w-75">
+                                            <input type="time" placeholder="Field Name" formControlName="startTime"
+                                                [(ngModel)]="task.startTime" name="startDate" [min]="currentTime"
+                                                class="search_input_field small-text p-2">
+                                            <i class="fa fa-calendar date-icon"></i>
+                                            <div class="padding-0"
+                                                *ngIf="taskForm.get('startTime')?.errors?.['required'] && taskForm.get('startTime')?.touched">
+                                                <small class="text-danger">startTime is required.</small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="d-flex justify-content-between w-50 align-items-center">
+                                        <h3 class="mb-0 w-50">End Time</h3>
+                                        <div class="input-container w-75">
+                                            <input type="time" placeholder="Field Name" formControlName="endTime"
+                                                [min]="task.startTime" [(ngModel)]="task.endTime" name="endTime"
+                                                class="search_input_field small-text p-2">
+                                            <i class="fa fa-calendar date-icon"></i>
+                                            <div class="padding-1"
+                                                *ngIf="taskForm.get('endTime')?.errors?.['required'] && taskForm.get('endTime')?.touched">
+                                                <small class="text-danger">endTime is required.</small>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="d-flex  gap-4">
+                                    <div class="d-flex justify-content-between w-50">
+                                        <strong class="mt-10" style="margin-top: 10%;">Add Color</strong>
+                                        <input name="color" class="clr" [(colorPicker)]="task.color"
+                                            [style.background]="task.color" />
+                                        <span class="dropdown-icon"><i class="fa fa-caret-down"></i></span>
+                                    </div>
+
+                                </div>
+                                <!-- <div class="d-flex gap-4">
+                                    <div class="d-flex justify-content-between w-50">
+                                      <strong class="mt-10" style="margin-top: 10%;">Add Color</strong> -->
+                                <!-- <div class="color-picker-wrapper"> -->
+                                <!-- <input name="color" type="color" class="clr" [(ngModel)]="task.color" /> -->
+                                <!-- </div> -->
+                                <!-- <span class="dropdown-icon"><i class="fa fa-caret-down"></i></span>
+                                    </div>
+                                  </div> -->
+
+                            </div>
+                            <!-- buttons -->
+                            <div class="d-flex gap-4 justify-content-end">
+                                <button  type="button" class="secondary_outline_btn medium-text Medium w-25"
+                                    (click)="closeModel('exampleModal')">
+                                    Cancel
+                                </button>
+
+                                <button type="submit" class="primary_btn w-25">Done</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+
+                    <!-- Add Event tabs -->
+                    <div class="tab-pane fade" id="pills-AddEvent" role="tabpanel" aria-labelledby="pills-AddEvent-tab"
+                        tabindex="0">
+                        <form [formGroup]="eventForm" (ngSubmit)="addEvent()">
+                            <div class="d-flex flex-column gap-3 add_task mb-5">
+                                {{event|json}}
+                                <!-- Title -->
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="mb-0">Title</h3>
+                                    <input formControlName="title" type="text" placeholder="Title" [(ngModel)]="event.title" name="title"
+                                        class="search_input_field small-text p-2">  
+                                     
+                                    </div>
+                                    <span class="padding-1"
+                                      *ngIf="eventForm.get('title')?.errors?.['required'] && eventForm.get('title')?.touched">
+                                    <small class="text-danger">Title is required.</small>
+                                    </span>
+                                    <span class="padding-1"
+                                      *ngIf="eventForm.get('title')?.errors?.['minlength'] && eventForm.get('title')?.touched">
+                                    <small class="text-danger">Title too short.</small>
+                                    </span>
+                                <!-- checkbox -->
+                                <div class="d-flex modal_heading">
+                                    <h3 class="mb-0">All day</h3>
+                                    <div class="d-flex gap-2 position-relative">
+                                        <label class="modal_checkbox">
+                                            <input type="checkbox" (input)="changeValidation('EVENT')"
+                                                [(ngModel)]="event.isAllDay" formControlName="isAllDay" name="isAllDay">
+                                            <span class="checkmarks"></span>
+                                        </label>
+                                        <h1 class="small-text Medium mb-0"
+                                            *ngIf="task.startDate !=null||task.startDate!=undefined"> {{task.startDate}}
+                                            <span
+                                                *ngIf="task.startDate !=null||task.startDate!=undefined">({{task.startDate
+                                                | date: 'EEEE'}})
+                                            </span></h1>
+                                    </div>
+                                </div>
+                                <!-- Start Date and End Date -->
+                                <div class="d-flex gap-4">
+                                    <div class="d-flex justify-content-between w-50">
+                                        <h3 class="mb-0 w-50">Start Date</h3>
+                                        <input formControlName="startDate" type="date" [min]="startOfDay" [(ngModel)]="event.startDate" name="startDate"
+                                        (input)="event.setTimesForWholeDay(false)" placeholder="Start Date" class="search_input_field small-text p-2 w-75">
+                                    </div>
+                                    <span class="padding-1"
+                                      *ngIf="eventForm.get('startDate')?.errors?.['required'] && eventForm.get('startDate')?.touched">
+                                    <small class="text-danger">startDate is required.</small>
+                                    </span>
+                                    <div  *ngIf="!event.isAllDay" class="d-flex justify-content-between w-50">
+                                        <h3 class="mb-0 w-50">End Date</h3>
+                                        <input formControlName="endDate" type="date" [min]="event.startDate" [(ngModel)]="event.endDate" name="endDate"
+                                            placeholder="End Date" class="search_input_field small-text p-2 w-75">
+                                    </div>
+                                    <span class="padding-1"
+                                      *ngIf="eventForm.get('endDate')?.errors?.['required'] && eventForm.get('endDate')?.touched">
+                                    <small class="text-danger">endDate is required.</small>
+                                    </span>
+                                </div>
+
+                                <!-- Start Time and End Time -->
+                                <div *ngIf="!event.isAllDay" class="d-flex gap-4">
+                                    <div class="d-flex justify-content-between w-50">
+                                        <h3 class="mb-0 w-50">Start Time</h3>
+                                        <input formControlName="startTime" type="time" placeholder="Start Time" [(ngModel)]="event.startTime" name="startTime"
+                                            class="search_input_field small-text p-2 w-75">
+                                    </div>
+                                    <span class="padding-1"
+                                      *ngIf="eventForm.get('startTime')?.errors?.['required'] && eventForm.get('startTime')?.touched">
+                                    <small class="text-danger">startTime is required.</small>
+                                    </span>
+                                    <div class="d-flex justify-content-between w-50">
+                                        <h3 class="mb-0 w-50">End Time</h3>
+                                        <input formControlName="endTime" type="time" placeholder="End Time" [(ngModel)]="event.endTime" name="endTime"
+                                            class="search_input_field small-text p-2 w-75"> 
+                                    </div>
+                                    <span class="padding-1"
+                                      *ngIf="eventForm.get('endTime')?.errors?.['required'] && eventForm.get('endTime')?.touched">
+                                    <small class="text-danger">endTime is required.</small>
+                                    </span>
+                                </div>
+
+                                <!-- Create Google Meeting Link -->
+                                <div class="d-flex gap-4 align-items-center">
+                                    <h3 class="mb-0">Create Google Meeting Link</h3>
+                                    <div class="d-flex justify-content-between w-30">
+                                        <label class="mb-0"><input formControlName="createGoogleMeeting" type="radio"
+                                                [value]="true"> Yes</label>
+                                        <label class="mb-0 ms-3"><input formControlName="createGoogleMeeting"
+                                                type="radio" [value]="false"> No</label>
+                                    </div>
+                                </div>
+
+                                <!-- Notification Time -->
+                                <div class="d-flex gap-4">
+                                    <div class="d-flex justify-content-between w-50">
+                                        <h3 class="mb-0 w-50">Notification Time</h3>
+                                        <input formControlName="notificationTime" type="time" [(ngModel)]="event.notificationTime" name="notificationTime"
+                                            placeholder="Notification Time"
+                                            class="search_input_field small-text p-2 w-75">
+                                    </div>
+                                </div>
+
+                                <!-- Location -->
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="mb-0">Location</h3>
+                                    <input formControlName="location" type="text" placeholder="Location" [(ngModel)]="event.location" name="location"
+                                        class="search_input_field small-text p-2">
+                                </div>
+                                <span class="padding-1"
+                                *ngIf="eventForm.get('location')?.errors?.['required'] && eventForm.get('location')?.touched">
+                              <small class="text-danger">location is required.</small>
+                              </span>
+                              <span class="padding-1"
+                                *ngIf="eventForm.get('location')?.errors?.['minlength'] && eventForm.get('location')?.touched">
+                              <small class="text-danger">Provide a valid location.</small>
+                              </span>
+
+                                <!-- Address -->
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="mb-0">Address</h3>
+                                    <input formControlName="address" type="text" placeholder="Address" [(ngModel)]="event.address" name="address"
+                                        class="search_input_field small-text p-2">
+                                </div>
+                                <span class="padding-1"
+                                *ngIf="eventForm.get('address')?.errors?.['required'] && eventForm.get('address')?.touched">
+                              <small class="text-danger">address is required.</small>
+                              </span>
+                              <span class="padding-1"
+                                *ngIf="eventForm.get('address')?.errors?.['minlength'] && eventForm.get('address')?.touched">
+                              <small class="text-danger">Provide a valid address.</small>
+                              </span>
+                                <!-- Description -->
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="mb-0">Description</h3>
+                                    <!-- Replace with your CKEditor component -->
+                                    <ckeditor [editor]="Editor" formControlName="description" [(ngModel)]="event.description" name="description"></ckeditor> 
+                                </div>
+                                <span class="padding-1"
+                                *ngIf="eventForm.get('description')?.errors?.['required'] && eventForm.get('description')?.touched">
+                              <small class="text-danger">description is required.</small>
+                              </span>
+                              <span class="padding-1"
+                                *ngIf="eventForm.get('description')?.errors?.['minlength'] && eventForm.get('description')?.touched">
+                              <small class="text-danger">description is too short.</small>
+                              </span>
+                                <!-- Color Picker -->
+                                <!-- <div class="d-flex justify-content-between">
+                                    <strong class="mt-10">Add Color</strong>
+                                    <input formControlName="color" class="clr" [(colorPicker)]="eventForm.value.color"
+                                        [style.background]="eventForm.value.color" />
+                                    <span class="dropdown-icon"><i class="fa fa-caret-down"></i></span>
+                                </div> -->
+
+                            </div>
+                            <div class="d-flex  gap-4">
+                                <div class="d-flex justify-content-between w-50">
+                                    <strong class="mt-10" style="margin-top: 10%;">Add Color</strong>
+                                    <input name="color" [(ngModel)]="event.color" class="clr" [(ngModel)]="event.color" name="color"
+                                        [(colorPicker)]="event.color" [style.background]="event.color" />
+                                    <span class="dropdown-icon"><i class="fa fa-caret-down"></i></span>
+                                </div>
+                            </div>
+                            <!-- Buttons -->
+                            <div class="d-flex gap-4 justify-content-end">
+                                <button type="button" class="secondary_outline_btn medium-text Medium w-25"
+                                    data-bs-dismiss="modal" aria-label="Close"
+                                    (click)="closeModel('exampleModal')">Cancel</button>
+                                <button type="submit" class="primary_btn w-25">Done</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

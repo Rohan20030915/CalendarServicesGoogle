@@ -1,0 +1,186 @@
+<div class="modal fade" id="eventedit" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    [ngClass]="{'show': isVisible}" [ngStyle]="{'display': isVisible ? 'block' : 'none'}" tabindex="-1">
+    <div class="modal-dialog large_modal modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4  modal_details">
+                <div class="single_tab mb-5">
+                    <button class="nav-link active p-1 Sub-Heading">Event</button>
+                </div>
+                <!-- Event edit -->
+                <form [formGroup]="eventForm" (ngSubmit)="updateEvent()">
+                    <div class="d-flex flex-column gap-3 add_task mb-5">
+                        {{event|json}}
+                        <!-- Title -->
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">Title</h3>
+                            <input formControlName="title" type="text" placeholder="Title" [(ngModel)]="event.title"
+                                name="title" class="search_input_field small-text p-2">
+
+                        </div>
+                        <span class="padding-1"
+                            *ngIf="eventForm.get('title')?.errors?.['required'] && eventForm.get('title')?.touched">
+                            <small class="text-danger">Title is required.</small>
+                        </span>
+                        <span class="padding-1"
+                            *ngIf="eventForm.get('title')?.errors?.['minlength'] && eventForm.get('title')?.touched">
+                            <small class="text-danger">Title too short.</small>
+                        </span>
+                        <!-- checkbox -->
+                        <div class="d-flex modal_heading">
+                            <h3 class="mb-0">All day</h3>
+                            <div class="d-flex gap-2 position-relative">
+                                <label class="modal_checkbox">
+                                    <input type="checkbox" (input)="changeValidation()" [(ngModel)]="event.isAllDay"
+                                        formControlName="isAllDay" name="isAllDay">
+                                    <span class="checkmarks"></span>
+                                </label>
+                                <h1 class="small-text Medium mb-0"
+                                    *ngIf="event.startDate !=null||event.startDate!=undefined"> {{event.startDate}}
+                                    <span *ngIf="event.startDate !=null||event.startDate!=undefined">({{event.startDate
+                                        | date: 'EEEE'}})
+                                    </span>
+                                </h1>
+                            </div>
+                        </div>
+                        <!-- Start Date and End Date -->
+                        <div class="d-flex gap-4">
+                            <div class="d-flex justify-content-between w-50">
+                                <h3 class="mb-0 w-50">Start Date</h3>
+                                <input formControlName="startDate" type="date" [min]="startOfDay"
+                                    [(ngModel)]="event.startDate" name="startDate" (input)="setTimesForWholeDay(false)"
+                                    placeholder="Start Date" class="search_input_field small-text p-2 w-75">
+                            </div>
+                            <span class="padding-1"
+                                *ngIf="eventForm.get('startDate')?.errors?.['required'] && eventForm.get('startDate')?.touched">
+                                <small class="text-danger">startDate is required.</small>
+                            </span>
+                            <div *ngIf="!event.isAllDay" class="d-flex justify-content-between w-50">
+                                <h3 class="mb-0 w-50">End Date</h3>
+                                <input formControlName="endDate" type="date" [min]="event.startDate"
+                                    [(ngModel)]="event.endDate" name="endDate" placeholder="End Date"
+                                    class="search_input_field small-text p-2 w-75">
+                            </div>
+                            <span class="padding-1"
+                                *ngIf="eventForm.get('endDate')?.errors?.['required'] && eventForm.get('endDate')?.touched">
+                                <small class="text-danger">endDate is required.</small>
+                            </span>
+                        </div>
+
+                        <!-- Start Time and End Time -->
+                        <div *ngIf="!event.isAllDay" class="d-flex gap-4">
+                            <div class="d-flex justify-content-between w-50">
+                                <h3 class="mb-0 w-50">Start Time</h3>
+                                <input formControlName="startTime" type="time" placeholder="Start Time"
+                                    [(ngModel)]="event.startTime" name="startTime"
+                                    class="search_input_field small-text p-2 w-75">
+                            </div>
+                            <span class="padding-1"
+                                *ngIf="eventForm.get('startTime')?.errors?.['required'] && eventForm.get('startTime')?.touched">
+                                <small class="text-danger">startTime is required.</small>
+                            </span>
+                            <div class="d-flex justify-content-between w-50">
+                                <h3 class="mb-0 w-50">End Time</h3>
+                                <input formControlName="endTime" type="time" placeholder="End Time"
+                                    [(ngModel)]="event.endTime" name="endTime"
+                                    class="search_input_field small-text p-2 w-75">
+                            </div>
+                            <span class="padding-1"
+                                *ngIf="eventForm.get('endTime')?.errors?.['required'] && eventForm.get('endTime')?.touched">
+                                <small class="text-danger">endTime is required.</small>
+                            </span>
+                        </div>
+
+                        <!-- Create Google Meeting Link -->
+                        <div class="d-flex gap-4 align-items-center">
+                            <h3 class="mb-0">Create Google Meeting Link</h3>
+                            <div class="d-flex justify-content-between w-30">
+                                <label class="mb-0"><input formControlName="createGoogleMeeting" type="radio"
+                                        [value]="true"> Yes</label>
+                                <label class="mb-0 ms-3"><input formControlName="createGoogleMeeting" type="radio"
+                                        [value]="false"> No</label>
+                            </div>
+                        </div>
+
+                        <!-- Notification Time -->
+                        <div class="d-flex gap-4">
+                            <div class="d-flex justify-content-between w-50">
+                                <h3 class="mb-0 w-50">Notification Time</h3>
+                                <input formControlName="notificationTime" type="time"
+                                    [(ngModel)]="event.notificationTime" name="notificationTime"
+                                    placeholder="Notification Time" class="search_input_field small-text p-2 w-75">
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">Location</h3>
+                            <input formControlName="location" type="text" placeholder="Location"
+                                [(ngModel)]="event.location" name="location" class="search_input_field small-text p-2">
+                        </div>
+                        <span class="padding-1"
+                            *ngIf="eventForm.get('location')?.errors?.['required'] && eventForm.get('location')?.touched">
+                            <small class="text-danger">location is required.</small>
+                        </span>
+                        <span class="padding-1"
+                            *ngIf="eventForm.get('location')?.errors?.['minlength'] && eventForm.get('location')?.touched">
+                            <small class="text-danger">Provide a valid location.</small>
+                        </span>
+
+                        <!-- Address -->
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">Address</h3>
+                            <input formControlName="address" type="text" placeholder="Address"
+                                [(ngModel)]="event.address" name="address" class="search_input_field small-text p-2">
+                        </div>
+                        <span class="padding-1"
+                            *ngIf="eventForm.get('address')?.errors?.['required'] && eventForm.get('address')?.touched">
+                            <small class="text-danger">address is required.</small>
+                        </span>
+                        <span class="padding-1"
+                            *ngIf="eventForm.get('address')?.errors?.['minlength'] && eventForm.get('address')?.touched">
+                            <small class="text-danger">Provide a valid address.</small>
+                        </span>
+                        <!-- Description -->
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">Description</h3>
+                            <!-- Replace with your CKEditor component -->
+                            <ckeditor [editor]="Editor" formControlName="description" [(ngModel)]="event.description"
+                                name="description"></ckeditor>
+                        </div>
+                        <span class="padding-1"
+                            *ngIf="eventForm.get('description')?.errors?.['required'] && eventForm.get('description')?.touched">
+                            <small class="text-danger">description is required.</small>
+                        </span>
+                        <span class="padding-1"
+                            *ngIf="eventForm.get('description')?.errors?.['minlength'] && eventForm.get('description')?.touched">
+                            <small class="text-danger">description is too short.</small>
+                        </span>
+                        <!-- Color Picker -->
+                        <!-- <div class="d-flex justify-content-between">
+                                    <strong class="mt-10">Add Color</strong>
+                                    <input formControlName="color" class="clr" [(colorPicker)]="eventForm.value.color"
+                                        [style.background]="eventForm.value.color" />
+                                    <span class="dropdown-icon"><i class="fa fa-caret-down"></i></span>
+                                </div> -->
+
+                    </div>
+                    <div class="d-flex  gap-4">
+                        <div class="d-flex justify-content-between w-50">
+                            <strong class="mt-10" style="margin-top: 10%;">Add Color</strong>
+                            <input name="color" [(ngModel)]="event.color" class="clr" [(ngModel)]="event.color"
+                                name="color" [(colorPicker)]="event.color" [style.background]="event.color" />
+                            <span class="dropdown-icon"><i class="fa fa-caret-down"></i></span>
+                        </div>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="d-flex gap-4 justify-content-end">
+                        <button type="button" class="secondary_outline_btn medium-text Medium w-25"
+                            data-bs-dismiss="modal" aria-label="Close" (click)="onClose()">Cancel</button>
+                        <button type="submit" class="primary_btn w-25">Done</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

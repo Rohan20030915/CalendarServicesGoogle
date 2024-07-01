@@ -1,0 +1,161 @@
+<!-- Task edit modal -->
+<div class="modal fade" id="taskedit" [ngClass]="{'show': isVisible}"
+    [ngStyle]="{'display': isVisible ? 'block' : 'none'}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1">
+    <div class="modal-dialog large_modal modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4  modal_details">
+                <div class="single_tab mb-5">
+                    <button class="nav-link active p-1 Sub-Heading">Task</button>
+                </div>
+                <form (ngSubmit)="updateTask()" [formGroup]="taskForm">
+                    <div class="d-flex flex-column gap-3 add_task mb-5">
+                        <!-- title -->
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">Title</h3>
+                            <input type="text" name="title" formControlName="title" [(ngModel)]="task.title"
+                                placeholder="Field Name " class="search_input_field small-text p-2">
+                        </div>
+                        <div class="padding"
+                            *ngIf="taskForm.get('title')?.errors?.['required'] && taskForm.get('title')?.touched">
+                            <small class="text-danger">Title is required.</small>
+                        </div>
+                        <span class="padding-1"
+                            *ngIf="taskForm.get('title')?.errors?.['minlength'] && taskForm.get('title')?.touched">
+                            <small class="text-danger">Title too short.</small>
+                        </span>
+                        <!-- Description -->
+                        <div class="d-flex justify-content-between">
+                            <h3 class="mb-0">Description</h3>
+                            <ckeditor [editor]="Editor" [(ngModel)]="task.description" formControlName="description"
+                                name="description"></ckeditor>
+
+                        </div>
+                        <div class="padding"
+                            *ngIf="taskForm.get('description')?.errors?.['required'] && taskForm.get('description')?.touched">
+                            <small class="text-danger">Description is required.</small>
+                        </div>
+                        <span class="padding-1"
+                            *ngIf="taskForm.get('description')?.errors?.['minlength'] && taskForm.get('description')?.touched">
+                            <small class="text-danger">Description is too short.</small>
+                        </span>
+                        <!-- checkbox -->
+                        <div class="d-flex modal_heading">
+                            <h3 class="mb-0">All day</h3>
+                            <div class="d-flex gap-2 position-relative">
+                                <label class="modal_checkbox">
+                                    <input type="checkbox" (input)="changeValidation()"
+                                        [(ngModel)]="task.isAllDay" formControlName="isAllDay" name="isAllDay">
+                                    <span class="checkmarks"></span>
+                                </label>
+                                <h1 class="small-text Medium mb-0"
+                                    *ngIf="task.startDate !=null||task.startDate!=undefined"> {{task.startDate}}
+                                    <span *ngIf="task.startDate !=null||task.startDate!=undefined">({{task.startDate
+                                        | date: 'EEEE'}})
+                                    </span>
+                                </h1>
+                            </div>
+                        </div>
+                        <!-- start date time -->
+                        <div class="d-flex gap-4">
+                            <div class="d-flex justify-content-between w-50 align-items-center">
+                                <h3 class="mb-0 w-50">Start Date</h3>
+                                <div class="input-container w-75">
+                                    <input type="date" placeholder="Field Name" formControlName="startDate"
+                                        [(ngModel)]="task.startDate" name="startDate" [min]="startOfDay"
+                                        (input)="setTimesForWholeDay(false)"
+                                        class="search_input_field small-text p-2">
+                                    <i class="fa fa-calendar date-icon"></i>
+                                    <div class="padding-1"
+                                        *ngIf="taskForm.get('startDate')?.errors?.['required'] && taskForm.get('startDate')?.touched">
+                                        <small class="text-danger">startDate is required.</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div *ngIf="!task.isAllDay" class="d-flex justify-content-between w-50 align-items-center">
+                                <h3 class="mb-0 w-50">End Date</h3>
+                                <div class="input-container w-75">
+                                    <input type="date" placeholder="Field Name" formControlName="endDate"
+                                        [min]="task.startDate" [(ngModel)]="task.endDate" name="endDate"
+                                        class="search_input_field small-text p-2">
+                                    <i class="fa fa-calendar date-icon"></i>
+                                    <div class="padding-1"
+                                        *ngIf="taskForm.get('endDate')?.errors?.['required'] && taskForm.get('endDate')?.touched">
+                                        <small class="text-danger">endDate is required.</small>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div *ngIf="!task.isAllDay" class="d-flex gap-4">
+                            <div class="d-flex justify-content-between w-50 align-items-center">
+                                <h3 class="mb-0 w-50">Start Time</h3>
+                                <div class="input-container w-75">
+                                    <input type="time" placeholder="Field Name" formControlName="startTime"
+                                        [(ngModel)]="task.startTime" name="startDate" 
+                                        class="search_input_field small-text p-2">
+                                    <i class="fa fa-calendar date-icon"></i>
+                                    <div class="padding-0"
+                                        *ngIf="taskForm.get('startTime')?.errors?.['required'] && taskForm.get('startTime')?.touched">
+                                        <small class="text-danger">startTime is required.</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-between w-50 align-items-center">
+                                <h3 class="mb-0 w-50">End Time</h3>
+                                <div class="input-container w-75">
+                                    <input type="time" placeholder="Field Name" formControlName="endTime"
+                                        [min]="task.startTime" [(ngModel)]="task.endTime" name="endTime"
+                                        class="search_input_field small-text p-2">
+                                    <i class="fa fa-calendar date-icon"></i>
+                                    <div class="padding-1"
+                                        *ngIf="taskForm.get('endTime')?.errors?.['required'] && taskForm.get('endTime')?.touched">
+                                        <small class="text-danger">endTime is required.</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="d-flex  gap-4">
+                            <div class="d-flex justify-content-between w-50">
+                                <strong class="mt-10" style="margin-top: 10%;">Add Color</strong>
+                                <input name="color" class="clr" [(colorPicker)]="task.color"
+                                    [style.background]="task.color" />
+                                <span class="dropdown-icon"><i class="fa fa-caret-down"></i></span>
+                            </div>
+
+                        </div>
+                        <!-- <div class="d-flex gap-4">
+                                    <div class="d-flex justify-content-between w-50">
+                                      <strong class="mt-10" style="margin-top: 10%;">Add Color</strong> -->
+                        <!-- <div class="color-picker-wrapper"> -->
+                        <!-- <input name="color" type="color" class="clr" [(ngModel)]="task.color" /> -->
+                        <!-- </div> -->
+                        <!-- <span class="dropdown-icon"><i class="fa fa-caret-down"></i></span>
+                                    </div>
+                                  </div> -->
+
+                    </div>
+                    <!-- buttons -->
+                    <div class="d-flex gap-4 justify-content-end">
+                        <button type="button" class="secondary_outline_btn medium-text Medium w-25"  (click)="onClose()">
+                            Cancel
+                        </button>
+
+                        <button type="submit" class="primary_btn w-25">Done</button>
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div>
+    </div>

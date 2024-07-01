@@ -1,0 +1,19 @@
+.blur-background {
+    filter: blur(5px);
+    pointer-events: none; /* Prevents interaction with background elements */
+  }
+  
+  
+  .clr {
+    width: 100px; /* Set desired width */
+    height: 50px; /* Set desired height */
+    margin-top: 10%;
+    margin-right: 30%;
+    border-radius: 4px; /* Make the input rectangular with slightly rounded corners */
+    border: 1px solid #ccc; /* Optional: add a border */
+    outline: none; /* Remove default outline */
+    cursor: pointer; /* Change cursor to pointer */
+    
+    box-sizing: border-box; /* Ensure padding is included in width/height */
+  }
+  
